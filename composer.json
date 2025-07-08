@@ -1,0 +1,24 @@
+{
+	"name": "msltns/wordpress",
+	"description": "This package provides common utilities.",
+	"version": "v0.0.1",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Daniel Muenter",
+            "email": "info@msltns.com"
+        }
+    ],
+	"require": {
+        "php": "^7.4|^8.0",
+		"msltns/utilities": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"msltns\\": "src/"
+		}
+	},
+	"config": {
+		"vendor-dir": "vendor"
+	}
+}

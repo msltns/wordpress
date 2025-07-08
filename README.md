@@ -1,2 +1,2 @@
-# wordpress
+# Some useful wordpress classes
 
