@@ -7,11 +7,11 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 use msltns\utilities\Logstream;
 
 /**
- * Class WP_Logstream provides a way to log debug messages to an API.
+ * Class MS_Logstream provides a way to log debug messages to an API.
  *
  * @category 	Class
  * @package  	Utilities
- * @author 		Daniel Muenter <info@msltns.com>
+ * @author 		msltns <info@msltns.com>
  * @version  	0.0.1
  * @since 0.0.1
  * @license 	GPL 3
@@ -27,14 +27,14 @@ use msltns\utilities\Logstream;
  *          	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// use msltns\wordpress\WP_Logstream;
-// WP_Logstream::getInstance( 'sender' )->log( 'message', 'level' );
-if ( ! class_exists( '\msltns\wordpress\WP_Logstream' ) ) {
+// use msltns\wordpress\MS_Logstream;
+// MS_Logstream::getInstance( 'sender' )->log( 'message', 'level' );
+if ( ! class_exists( '\msltns\wordpress\MS_Logstream' ) ) {
 	
-	class WP_Logstream extends Logstream {
+	class MS_Logstream extends Logstream {
         
 		/**
-		 * @var \WP_Logstream
+		 * @var \MS_Logstream
 		 */
 		private static $instance;
         
@@ -58,7 +58,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Logstream' ) ) {
          * @param   string  $plattform      The platform.
          * @param   string  $environment    The environment.
          * @param   string  $service        The service.
-		 * @return \WP_Logstream
+		 * @return \MS_Logstream
 		 */
 		final public static function instance( string $platform = '', string $environment = '', string $service = '' ) {
 			return self::getInstance( $platform, $environment, $service );
@@ -70,7 +70,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Logstream' ) ) {
          * @param   string  $plattform      The platform.
          * @param   string  $environment    The environment.
          * @param   string  $service        The service.
-		 * @return \WP_Logstream
+		 * @return \MS_Logstream
 		 */
 		final public static function get_instance( string $platform = '', string $environment = '', string $service = '' ) {
 			return self::getInstance( $platform, $environment, $service );
@@ -82,7 +82,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Logstream' ) ) {
          * @param   string  $plattform      The platform.
          * @param   string  $environment    The environment.
          * @param   string  $service        The service.
-		 * @return \WP_Logstream
+		 * @return \MS_Logstream
 		 */
 		final public static function getInstance( string $platform = '', string $environment = '', string $service = '' ) {
 			
@@ -162,7 +162,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Logstream' ) ) {
             // WP Errors
             $log_wp_errors = get_option( 'logstream_wp_errors', false );
 			
-            if ( $log_wp_errors === '1' || ( defined( 'LOGSTREAM_WP_ERRORS' ) && LOGSTREAM_WP_ERRORS === true ) || apply_filters( 'msltns_log_wp_errors_to_stream', false ) ) {
+            if ( $log_wp_errors === '1' || ( defined( 'LOGSTREAM_MS_ERRORS' ) && LOGSTREAM_MS_ERRORS === true ) || apply_filters( 'msltns_log_wp_errors_to_stream', false ) ) {
                 add_action( 'wp_error_added',           array( $this, 'handle_wp_error' ), 10, 4 );
                 add_action( 'doing_it_wrong_run',       array( $this, 'handle_wp_doing_it_wrong' ), 10, 3 );
                 add_action( 'deprecated_function_run',  array( $this, 'handle_wp_deprecated_function' ), 10, 3 );
@@ -298,7 +298,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Logstream' ) ) {
 		        ?>
                 <select id="<?php echo esc_attr( $name ); ?>" name="<?php echo esc_attr( $name ); ?>" style="min-width:350px;">
                     <?php
-                    foreach( $args['options'] as $o_value => $o_label ) {
+                    foreach ( $args['options'] as $o_value => $o_label ) {
                         ?>
                         <option value="<?php echo esc_attr( $o_value ); ?>"<?php if ( $o_value === $value ) { echo ' selected="selected"'; } ?>><?php echo esc_html( $o_label ); ?></option>
                         <?php
@@ -320,14 +320,14 @@ if ( ! class_exists( '\msltns\wordpress\WP_Logstream' ) ) {
 		}
         
 		/**
-		 * Fires when an error is added to a WP_Error object.
+		 * Fires when an error is added to a MS_Error object.
 		 *
 		 * @param string|int $code     Error code.
 		 * @param string     $message  Error message.
 		 * @param mixed      $data     Error data. Might be empty.
-		 * @param WP_Error   $wp_error The WP_Error object.
+		 * @param MS_Error   $wp_error The MS_Error object.
 		 */
-		public function handle_wp_error( $code, $message, $data, $WP_Error ) {
+		public function handle_wp_error( $code, $message, $data, $MS_Error ) {
             if ( is_object( $data ) ) {
                 $data = print_r( $data, true );
             }
@@ -344,7 +344,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Logstream' ) ) {
                 $context = $data;
             }
             
-            $this->log( "WP_Error: {$message}", 'error', $context );
+            $this->log( "MS_Error: {$message}", 'error', $context );
 		}
 		
 		/**

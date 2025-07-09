@@ -5,20 +5,20 @@ namespace msltns\wordpress;
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 use msltns\utilities\Utils;
-use msltns\wordpress\WP_Logstream;
+use msltns\wordpress\MS_Logstream;
 
-if ( ! class_exists( '\msltns\wordpress\WP_Utils' ) ) {
+if ( ! class_exists( '\msltns\wordpress\MS_Utils' ) ) {
 	
     if ( !defined( 'UTILS_VERSION' ) ) {
         define( 'UTILS_VERSION', '0.0.1' );
     }
     
-	class WP_Utils extends Utils {
+	class MS_Utils extends Utils {
 		
 		private $parent;
 		
 		/**
-		 * @var \WP_Utils
+		 * @var \MS_Utils
 		 */
 		private static $instance;
 		
@@ -34,7 +34,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Utils' ) ) {
 		/**
 		 * Singleton instance.
 		 * 
-         * @return \WP_Utils
+         * @return \MS_Utils
 		 */
 		public static function instance() {
             return self::getInstance();
@@ -43,7 +43,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Utils' ) ) {
 		/**
 		 * Singleton instance.
 		 * 
-		 * @return \WP_Utils
+		 * @return \MS_Utils
 		 */
 		public static function get_instance() {
             return self::getInstance();
@@ -52,7 +52,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Utils' ) ) {
 		/**
 		 * Singleton instance.
 		 * 
-		 * @return \WP_Utils
+		 * @return \MS_Utils
 		 */
 		public static function getInstance() {
             if ( !isset( self::$instance ) ) {
@@ -77,7 +77,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Utils' ) ) {
     		}
             
         	add_action( 'msltns_cleanup_transients', function() {
-                WP_Utils::instance()->cleanup_msltns_transients();
+                MS_Utils::instance()->cleanup_msltns_transients();
         	} );
             
         	if ( ! wp_next_scheduled( 'msltns_cleanup_transients' ) ) {
@@ -180,7 +180,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Utils' ) ) {
         	$data = [];
         	// $countries is defined in include file
             $countries = include( __DIR__ . '/../data/countries.php' );
-        	foreach( $countries as $key => $value ) {
+        	foreach ( $countries as $key => $value ) {
         		$data[] = [
         			'name' => $value,
         			'code' => $key
@@ -493,7 +493,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Utils' ) ) {
 		 */
         public function display_admin_notices() {
             $notices = $this->get_admin_notices();
-            foreach( $notices as $key => $notice ) {
+            foreach ( $notices as $key => $notice ) {
                 $type        = $notice['type'];
                 $message     = base64_decode( $notice['message'] );
                 // $message     = $this->unesc_string( $message );
@@ -737,11 +737,11 @@ if ( ! class_exists( '\msltns\wordpress\WP_Utils' ) ) {
 		 * 	at least 1 numeric character
 		 *
 		 * @param 	string $password	The password to validate.
-		 * @return 	bool|WP_Error 		The validation result.
+		 * @return 	bool|MS_Error 		The validation result.
 		 */
 		public function validate_password( string $password = '' ) {
 			
-			$error = new \WP_Error();
+			$error = new \MS_Error();
 			
 			// check if password is empty
 			if ( empty( $password ) ) {
@@ -778,7 +778,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Utils' ) ) {
 			
 			if ( $error->has_errors() ) {
 				$this->log( 'Password validation failed: ' . implode( ' ', $error->get_error_messages() ) );
-				return new \WP_Error( 'password_does_not_meet_security_requirements', 'The password does not meet our security requirements. Please make sure that your password is at least 8 characters long, contains at least one lowercase and one uppercase letter each, and at least one of the following special characters @#/\*+-_.\'§$%&^?<>:;,()!.' );
+				return new \MS_Error( 'password_does_not_meet_security_requirements', 'The password does not meet our security requirements. Please make sure that your password is at least 8 characters long, contains at least one lowercase and one uppercase letter each, and at least one of the following special characters @#/\*+-_.\'§$%&^?<>:;,()!.' );
 			}
 			
 			return true;
@@ -1007,7 +1007,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Utils' ) ) {
                 $message = print_r( $message, true );
             }
             
-            $logstream = WP_Logstream::getInstance();
+            $logstream = MS_Logstream::getInstance();
             $logstream->log( $message, $level, $context );
 		}
 		
@@ -1039,31 +1039,31 @@ if ( ! class_exists( '\msltns\wordpress\WP_Utils' ) ) {
 	}
 	
     add_action( 'init', function() {
-        $utils = \msltns\wordpress\WP_Utils::get_instance();
+        $utils = \msltns\wordpress\MS_Utils::get_instance();
         $utils->init();
     } );
     
     /*
     
     activate:
-        WP_Utils::get_instance()->setup_db_for_msltns_transients();
+        MS_Utils::get_instance()->setup_db_for_msltns_transients();
     
     
     deactivate: 
 		if ( wp_next_scheduled ( 'cleanup_msltns_transients' ) ) {
 		    wp_clear_scheduled_hook( 'cleanup_msltns_transients' );
 		}
-		WP_Utils::get_instance()->teardown_db_for_msltns_transients();
+		MS_Utils::get_instance()->teardown_db_for_msltns_transients();
     
     */
     
     add_action( 'admin_notices', function() {
-        $utils = \msltns\wordpress\WP_Utils::get_instance();
+        $utils = \msltns\wordpress\MS_Utils::get_instance();
         $utils->display_admin_notices();
     } );
     
     add_action( 'core_upgrade_preamble', function() {
-        $utils = \msltns\wordpress\WP_Utils::get_instance();
+        $utils = \msltns\wordpress\MS_Utils::get_instance();
         $utils->debug_pending_updates();
     } );
 }

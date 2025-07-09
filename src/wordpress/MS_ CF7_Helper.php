@@ -4,14 +4,14 @@ namespace msltns\wordpress;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-use msltns\wordpress\WP_Utils;
+use msltns\wordpress\MS_Utils;
 
 /**
- * Class WP_CF7_Helper allows to translate Contact Form 7 forms.
+ * Class MS_CF7_Helper allows to translate Contact Form 7 forms.
  *
  * @category 	Class
- * @package  	WP_CF7_Helper
- * @author 		Daniel Muenter <info@msltns.com>
+ * @package  	MS_CF7_Helper
+ * @author 		msltns <info@msltns.com>
  * @version  	0.0.1
  * @since       0.0.1
  * @license 	GPL 3
@@ -26,9 +26,9 @@ use msltns\wordpress\WP_Utils;
  *          	along with this program; if not, write to the Free Software
  *          	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-if ( ! class_exists( '\msltns\wordpress\WP_CF7_Helper' ) ) {
+if ( ! class_exists( '\msltns\wordpress\MS_CF7_Helper' ) ) {
     
-    class WP_CF7_Helper {
+    class MS_CF7_Helper {
         
         /**
     	 * Main constructor.
@@ -109,7 +109,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_CF7_Helper' ) ) {
             
             if ( !empty( $tag['labels'] ) ) {
                 $labels = [];
-                foreach( $tag['labels'] as $label ) {
+                foreach ( $tag['labels'] as $label ) {
                     $labels[] = __( $label, $textdomain );
                 }
                 $tag['labels'] = $labels;
@@ -117,7 +117,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_CF7_Helper' ) ) {
             
             if ( $tag['basetype'] === 'submit' && !empty( $tag['values'] ) ) {
                 $values = [];
-                foreach( $tag['values'] as $value ) {
+                foreach ( $tag['values'] as $value ) {
                     $values[] = __( $value, $textdomain );
                 }
                 $tag['values'] = $values;
@@ -141,7 +141,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_CF7_Helper' ) ) {
             
             if ( in_array( $tag['basetype'], [ 'checkbox', 'radio', 'select' ] ) ) {
                 $values = [];
-                foreach( $tag['raw_values'] as $raw ) {
+                foreach ( $tag['raw_values'] as $raw ) {
                     if ( preg_match( '/[^\|]+\|[\w\d]+/', $raw ) ) {
                         $kv = explode( '|', $raw );
                         $values[] = $kv[1];

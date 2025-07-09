@@ -4,14 +4,14 @@ namespace msltns\wordpress;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-use msltns\wordpress\WP_Dynamic_Router;
+use msltns\wordpress\MS_Dynamic_Router;
 
 /**
- * Class WP_Template_Manager makes using custom post templates in wordpress easy.
+ * Class MS_Template_Manager makes using custom post templates in wordpress easy.
  *
  * @category 	Class
- * @package  	WP_Template_Manager
- * @author 		Daniel Muenter <info@msltns.com>
+ * @package  	MS_Template_Manager
+ * @author 		msltns <info@msltns.com>
  * @version  	0.0.1
  * @since 0.0.1
  * @license 	GPL 3
@@ -26,9 +26,9 @@ use msltns\wordpress\WP_Dynamic_Router;
  *          	along with this program; if not, write to the Free Software
  *          	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-if ( ! class_exists( '\msltns\wordpress\WP_Template_Manager' ) ) {
+if ( ! class_exists( '\msltns\wordpress\MS_Template_Manager' ) ) {
     
-    class WP_Template_Manager {
+    class MS_Template_Manager {
         
         private
                     
@@ -125,7 +125,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Template_Manager' ) ) {
                 
     		}
             /* check if custom route is dynamic */
-            else if ( WP_Dynamic_Router::is_dynamic_page() ) {
+            else if ( MS_Dynamic_Router::is_dynamic_page() ) {
                 
                 $post_type     = 'dynamic_page';
                 $page_template = apply_filters( 'msltns_dynamic_route_page_template', $template );

@@ -4,16 +4,16 @@ namespace msltns\wordpress;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-use msltns\wordpress\WP_Dynamic_Router;
+use msltns\wordpress\MS_Element;
 
 /**
- * Class WP_Slider adds some useful shortcodes.
+ * Class MS_Slider adds some useful shortcodes.
  *
  * @category 	Class
- * @package  	WP_Slider
- * @author 		Daniel Muenter <info@msltns.com>
+ * @package  	MS_Slider
+ * @author 		msltns <info@msltns.com>
  * @version  	0.0.1
- * @since 0.0.1
+ * @since       0.0.1
  * @license 	GPL 3
  *          	This program is free software; you can redistribute it and/or modify
  *          	it under the terms of the GNU General Public License, version 3, as
@@ -26,15 +26,9 @@ use msltns\wordpress\WP_Dynamic_Router;
  *          	along with this program; if not, write to the Free Software
  *          	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-if ( ! class_exists( '\msltns\wordpress\WP_Slider' ) ) {
+if ( ! class_exists( '\msltns\wordpress\MS_Slider' ) ) {
     
-    if ( ! defined( 'WPWOODO_ASSETS_DIR' ) ) {
-        define( 'WPWOODO_ASSETS_DIR', __DIR__ . '/../assets' );
-    }
-    
-    class WP_Slider {
-        
-        private $routes;
+    class MS_Slider extends MS_Element {
         
         /**
     	 * Main constructor.
@@ -43,112 +37,122 @@ if ( ! class_exists( '\msltns\wordpress\WP_Slider' ) ) {
             
             $this->routes = [
                 'msltnscss/slick' => [
-                    'file'  => WPWOODO_ASSETS_DIR . '/css/slick.min.css',
+                    'file'  => MSLTNS_ASSETS_DIR . '/css/slick.min.css',
                     'type'  => 'css',
                     'ctype' => 'text/css',
                 ],
                 'msltnscss/slicktheme' => [
-                    'file'  => WPWOODO_ASSETS_DIR . '/css/slick-theme.min.css',
+                    'file'  => MSLTNS_ASSETS_DIR . '/css/slick-theme.min.css',
                     'type'  => 'css',
                     'ctype' => 'text/css',
                 ],
                 'msltnsjs/slick' => [
-                    'file'  => WPWOODO_ASSETS_DIR . '/js/slick.min.js',
+                    'file'  => MSLTNS_ASSETS_DIR . '/js/slick.min.js',
                     'type'  => 'js',
                     'ctype' => 'application/javascript',
                 ],
                 'msltnsimg/ajaxloader' => [
-                    'file'  => WPWOODO_ASSETS_DIR . '/images/ajax-loader.gif',
+                    'file'  => MSLTNS_ASSETS_DIR . '/images/ajax-loader.gif',
                     'type'  => 'img',
                     'ctype' => 'image/gif',
                 ],
                 'msltnsfonts/slickeot' => [
-                    'file'  => WPWOODO_ASSETS_DIR . '/fonts/slick.eot',
+                    'file'  => MSLTNS_ASSETS_DIR . '/fonts/slick.eot',
                     'type'  => 'font',
                     'ctype' => 'application/vnd.ms-fontobject',
                 ],
                 'msltnsfonts/slicksvg' => [
-                    'file'  => WPWOODO_ASSETS_DIR . '/fonts/slick.svg',
+                    'file'  => MSLTNS_ASSETS_DIR . '/fonts/slick.svg',
                     'type'  => 'font',
                     'ctype' => 'image/svg+xml',
                 ],
                 'msltnsfonts/slickttf' => [
-                    'file'  => WPWOODO_ASSETS_DIR . '/fonts/slick.ttf',
+                    'file'  => MSLTNS_ASSETS_DIR . '/fonts/slick.ttf',
                     'type'  => 'font',
                     'ctype' => 'application/font-ttf',
                 ],
                 'msltnsfonts/slickwoff' => [
-                    'file'  => WPWOODO_ASSETS_DIR . '/fonts/slick.woff',
+                    'file'  => MSLTNS_ASSETS_DIR . '/fonts/slick.woff',
                     'type'  => 'font',
                     'ctype' => 'application/font-woff',
                 ],
             ];
             
-            add_action( 'init', array( $this, 'register_dynamic_route' ), 5 );
-            add_action( 'msltns_dynamic_route_file', array( $this, 'handle_dynamic_route_file' ), 10, 2 );
-            add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-        }
-        
-    	/**
-    	 * Registers necessary dynamic route.
-    	 * 
-         * @return void
-    	 */
-        public function register_dynamic_route() {
-        
-            // make sure our DynamicRouter class exists
-            if ( ! class_exists( '\msltns\wordpress\WP_Dynamic_Router' ) ) {
-                return false;
-            }
-
-            // register asset routes
-            foreach( $this->routes as $route => $data ) {
-                WP_Dynamic_Router::create( $route, $data['type'] );
-            }
+            $this->scripts = [
+                'slickcss' => [
+                    'action' => 'register',
+                    'type'   => 'style',
+                    'handle' => 'slick',
+                    'src'    => trailingslashit( network_home_url() ) . 'msltnscss/slick',
+                ],
+                'slickthemecss' => [
+                    'action' => 'register',
+                    'type'   => 'style',
+                    'handle' => 'slick-theme',
+                    'src'    => trailingslashit( network_home_url() ) . 'msltnscss/slicktheme',
+                ],
+                'slickjs' => [
+                    'action' => 'register',
+                    'type'   => 'script',
+                    'handle' => 'slick',
+                    'src'    => trailingslashit( network_home_url() ) . 'msltnsjs/slick',
+                    'deps'   => [ 'jquery' ],
+                    'footer' => true,
+                ],
+            ];
             
-            // handle our page routes
-            WP_Dynamic_Router::handle();
-        }
-        
-    	/**
-    	 * Handles dynamic route files.
-    	 * 
-         * @return void
-    	 */
-        public function handle_dynamic_route_file( $type, $route ) {
-            $dest_file = $content_type = '';
-            if ( in_array( $type, [ 'css', 'js', 'img', 'font' ] ) && ! empty( $this->routes[ $route ] ) ) {
-                $dest_file    = $this->routes[ $route ]['file'];
-                $content_type = $this->routes[ $route ]['ctype'];
-            }
+            add_shortcode( 'ms_post_slider', array( $this, 'generate_post_slider' ) );
             
-            if ( ! empty( $dest_file ) && ! empty( $content_type ) && file_exists( $dest_file ) ) {
-                header( 'Content-type: ' . $content_type );
-                header( 'Content-Length: ' . filesize( $dest_file ) );
-                readfile( $dest_file );
-                exit;
-            }
-        }
-        
-    	/**
-    	 * Registers and enqueues scripts and styles.
-    	 * 
-    	 * @return void
-    	 */
-    	public function enqueue_scripts() {
-            wp_register_style( 'slick', trailingslashit( network_home_url() ) . 'msltnscss/slick' );
-            wp_register_style( 'slick-theme', trailingslashit( network_home_url() ) . 'msltnscss/slicktheme' );
-            wp_register_script( 'slick', trailingslashit( network_home_url() ) . 'msltnsjs/slick', array( 'jquery' ), false, true );
+            add_shortcode( 'msltns_post_slider', array( $this, 'generate_post_slider' ) );
         }
         
         /**
+         * Generates a slider out of posts.
+         *
+         * @param array  $atts      The shortcode attributes.
+         * @param string $content   The shortcode content.
+         * @return string The resolved html code.
+         */
+        public function generate_post_slider( $atts, $content ) {
+            
+            $defaults = array(
+        		'limit'      => -1,
+        		'post_type'  => 'post',
+        		'category'   => 0,
+                'orderby'    => 'title',
+                'order'      => 'ASC',
+        		'class'      => '',
+        		'slides'     => 3,
+                'image_size' => 'thumbnail',
+        	);
+        	extract( shortcode_atts( $defaults, $atts ) );
+            
+            $args = array(
+                'post_type'        => $post_type,
+                'post_status'      => 'publish',
+                'numberposts'      => $limit,
+        		'category'         => $category,
+                'orderby'          => $orderby,
+                'order'            => $order,
+        		'include'          => array(),
+        		'exclude'          => array(),
+        		'meta_key'         => '',
+        		'meta_value'       => '',
+                // 'suppress_filters' => true,
+    		);
+    		$posts = get_posts( $args );
+            
+            return $this->create_post_slider( $posts, $atts );
+        }
+        
+    	/**
          * Creates a post slider based on slick.
          *
          * @param array $posts  The posts.
          * @param array $args   The args.
          * @return string The html output.
          */
-		public function create_post_slider( $posts = array(), $args = array() ) {
+		private function create_post_slider( $posts = array(), $args = array() ) {
             
             if ( empty( $posts ) ) {
                 return false;
@@ -194,7 +198,5 @@ if ( ! class_exists( '\msltns\wordpress\WP_Slider' ) ) {
 		    echo $output;
 		    return ob_get_clean(); 
 		}
-
     }
-    
 }

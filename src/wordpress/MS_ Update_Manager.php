@@ -4,7 +4,7 @@ namespace msltns\wordpress;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-class WP_Update_Manager {
+class MS_Update_Manager {
 
 	private $api_url     = '';
 	private $api_data    = array();
@@ -502,7 +502,7 @@ class WP_Update_Manager {
 	 * will be allowed again. This way if the site is down for some reason we don't bombard
 	 * it with failed API requests.
 	 *
-	 * @see WP_Update_Manager::request_recently_failed
+	 * @see MS_Update_Manager::request_recently_failed
 	 *
 	 * @since 0.0.1
 	 */

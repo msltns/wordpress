@@ -4,14 +4,14 @@ namespace msltns\wordpress;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-use msltns\wordpress\WP_Utils;
+use msltns\wordpress\MS_Utils;
 
 /**
- * Class WP_Dynamic_Router makes creating dynamic page or file urls in wordpress easy.
+ * Class MS_Dynamic_Router makes creating dynamic page or file urls in wordpress easy.
  *
  * @category 	Class
- * @package  	WP_Dynamic_Router
- * @author 		Daniel Muenter <info@msltns.com>
+ * @package  	MS_Dynamic_Router
+ * @author 		msltns <info@msltns.com>
  * @version  	0.0.1
  * @since       0.0.1
  * @license 	GPL 3
@@ -26,9 +26,9 @@ use msltns\wordpress\WP_Utils;
  *          	along with this program; if not, write to the Free Software
  *          	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-if ( ! class_exists( '\msltns\wordpress\WP_Dynamic_Router' ) ) {
+if ( ! class_exists( '\msltns\wordpress\MS_Dynamic_Router' ) ) {
     
-    class WP_Dynamic_Router {
+    class MS_Dynamic_Router {
                 
         protected static
 
@@ -72,26 +72,26 @@ if ( ! class_exists( '\msltns\wordpress\WP_Dynamic_Router' ) ) {
             
             // validate our route string
             if ( !is_string( $route ) ) {
-                throw new \Exception( 'Argument #1 of WP_Dynamic_Router::create() must be a valid not empty string' );
+                throw new \Exception( 'Argument #1 of MS_Dynamic_Router::create() must be a valid not empty string' );
             }
             
             if ( empty( $route ) ) {
-                throw new \Exception( 'Argument #1 of WP_Dynamic_Router::create() must be a valid not empty string' );
+                throw new \Exception( 'Argument #1 of MS_Dynamic_Router::create() must be a valid not empty string' );
             }
             
             // validate our template string
             if ( !is_string( $template ) ) {
-                throw new \Exception( 'Argument #2 of WP_Dynamic_Router::create() must be a string referencing a WordPress template file' );
+                throw new \Exception( 'Argument #2 of MS_Dynamic_Router::create() must be a string referencing a WordPress template file' );
             }
             
             // validate our template string
             if ( !is_string( $path ) ) {
-                throw new \Exception( 'Argument #3 of WP_Dynamic_Router::create() must be a string referencing a WordPress template file' );
+                throw new \Exception( 'Argument #3 of MS_Dynamic_Router::create() must be a string referencing a WordPress template file' );
             }
 
             // validate our route arguments
             if ( !is_array( $args ) ) {
-                throw new \Exception( 'Argument #4 of WP_Dynamic_Router::create() must be an empty array or array of possible regex matches' );
+                throw new \Exception( 'Argument #4 of MS_Dynamic_Router::create() must be an empty array or array of possible regex matches' );
             }
             
             // insure regex pattern is available
@@ -129,7 +129,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Dynamic_Router' ) ) {
             // determine how to handle our templates
             add_action( 'wp', array( __CLASS__, 'action_template_include' ) );
             
-            // get the current WP_Dynamic_Router route being accessed.
+            // get the current MS_Dynamic_Router route being accessed.
             add_filter( 'msltns_current_route',        array( __CLASS__, 'get_current_route' ) );
             
             // obtain all arguments of the current route if existing
@@ -174,7 +174,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Dynamic_Router' ) ) {
          */
         public static function get_registered_uris() {
             $uris = [];
-            foreach( self::$custom_routes as $key => $route ) {
+            foreach ( self::$custom_routes as $key => $route ) {
                 if ( $route['type'] === 'page' ) {
                     $uris[] = '/' . str_replace( [ '^', '$' ], '', $route['route'] );
                 }
@@ -262,13 +262,13 @@ if ( ! class_exists( '\msltns\wordpress\WP_Dynamic_Router' ) ) {
 
             } else {
                 // throw exception when we haven't got a string
-                throw new \Exception( 'WP_Dynamic_Router::get_query_var() requires the first argument to be a string' );
+                throw new \Exception( 'MS_Dynamic_Router::get_query_var() requires the first argument to be a string' );
             }
         }
 
 
         /**
-         * Gets the current WP_Dynamic_Router route being accessed.
+         * Gets the current MS_Dynamic_Router route being accessed.
          *
          * @param string|null $matched_rule rule that was matched (regex)
          * @return bool|string Gets the current route or false if route is invalid
@@ -345,16 +345,16 @@ if ( ! class_exists( '\msltns\wordpress\WP_Dynamic_Router' ) ) {
             add_rewrite_endpoint( 'router', EP_PERMALINK );
 
             // add rewrite tag
-            add_rewrite_tag( '%WP_Dynamic_Router%', '([^&]+)' );
+            add_rewrite_tag( '%MS_Dynamic_Router%', '([^&]+)' );
 
             // loop through our rewrites
-            foreach( self::$custom_routes as $sRegex => $aRoute ) {
+            foreach ( self::$custom_routes as $sRegex => $aRoute ) {
 
                 $sRouteKey = md5( serialize( self::$custom_routes[$sRegex] ) );
                 self::$custom_routes['key'] = $sRouteKey;
 
                 // set our $sArgs to be null
-                $sArgs = '?WP_Dynamic_Router=' . $sRegex;
+                $sArgs = '?MS_Dynamic_Router=' . $sRegex;
 
                 // check if we have any arguments
                 if ( is_array( $aRoute['args'] ) && count( $aRoute['args'] ) ) {
@@ -363,7 +363,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_Dynamic_Router' ) ) {
                     $i = 0;
 
                     // loop through our arguments
-                    foreach( $aRoute['args'] as $sArgument ) {
+                    foreach ( $aRoute['args'] as $sArgument ) {
                         // add argument to our rewrite string
                         self::$custom_query_vars[] = sprintf( 'DR%s', esc_attr( $sArgument ) );
                         $sArgs.= sprintf( '&DR%s=$matches[%d]', esc_attr( $sArgument ), ++$i );
@@ -415,13 +415,13 @@ if ( ! class_exists( '\msltns\wordpress\WP_Dynamic_Router' ) ) {
                     }
                 }
 
-                // add our WP_Dynamic_Router variable
-                $vars[] = 'WP_Dynamic_Router';
+                // add our MS_Dynamic_Router variable
+                $vars[] = 'MS_Dynamic_Router';
 
                 // check we have a valid route with args
                 if ( ! empty( $aRoute['args'] ) ) {
                     // loop through our arguments
-                    foreach( $aRoute['args'] as $sVar ) {
+                    foreach ( $aRoute['args'] as $sVar ) {
                         $vars[] = 'DR' . $sVar;
                     }
                 }

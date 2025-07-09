@@ -4,7 +4,7 @@ namespace msltns\wordpress;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-use msltns\wordpress\WP_Utils;
+use msltns\wordpress\MS_Utils;
 
 /** 
  *  This class handles the complete license management of any wp plugin. It integrates with
@@ -22,9 +22,9 @@ use msltns\wordpress\WP_Utils;
  *  To initialize the license manager add the following code:  
  *  
  *  <code>
- *  use msltns\wordpress\WP_License_Manager;
+ *  use msltns\wordpress\MS_License_Manager;
  *  
- *  $lm = new WP_License_Manager();
+ *  $lm = new MS_License_Manager();
  *  $lm->init(
  *  	'<YOUR_PREFIX>',
  *  	'<YOUR-SLUG>',
@@ -57,9 +57,9 @@ use msltns\wordpress\WP_Utils;
  *
  * @since 0.0.1
  */
-if ( ! class_exists( '\msltns\wordpress\WP_License_Manager' ) ) {
+if ( ! class_exists( '\msltns\wordpress\MS_License_Manager' ) ) {
 	
-	class WP_License_Manager {
+	class MS_License_Manager {
         
         // Utilities class
         private $utils;
@@ -73,7 +73,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_License_Manager' ) ) {
 		private $host = '';
 						
 		public function __construct() {
-            $this->utils = WP_Utils::instance();
+            $this->utils = MS_Utils::instance();
 		}
 
 		public function init( $prefix = '', $reference = '', $host = '', $token = '' ) {
@@ -278,7 +278,7 @@ if ( ! class_exists( '\msltns\wordpress\WP_License_Manager' ) ) {
                             $domain = $this->get_domain();
 							$found  = false;
 							$registered = $license_data->registered_domains;
-							foreach( $registered as $d ) {
+							foreach ( $registered as $d ) {
 								if ( $d->registered_domain === $domain ) {
 									// status is really active
 									$found = true;
