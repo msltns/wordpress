@@ -195,7 +195,5 @@ if ( ! class_exists( '\msltns\wordpress\MS_Template_Manager' ) ) {
         public function set_post_types( array $post_types ) {
             $this->post_types = $post_types;
         }
-        
     }
-
 }

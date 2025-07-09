@@ -26,9 +26,6 @@ use msltns\utilities\Logstream;
  *          	along with this program; if not, write to the Free Software
  *          	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-
-// use msltns\wordpress\MS_Logstream;
-// MS_Logstream::getInstance( 'sender' )->log( 'message', 'level' );
 if ( ! class_exists( '\msltns\wordpress\MS_Logstream' ) ) {
 	
 	class MS_Logstream extends Logstream {
@@ -377,7 +374,5 @@ if ( ! class_exists( '\msltns\wordpress\MS_Logstream' ) ) {
             
             return apply_filters( 'msltns_logstream_handlers', $handlers );
         }
-		
 	}
-	
 }

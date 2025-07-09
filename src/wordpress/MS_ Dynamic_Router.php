@@ -542,13 +542,8 @@ if ( ! class_exists( '\msltns\wordpress\MS_Dynamic_Router' ) ) {
                         return $template;
                         
                     }, 10000 );
-                    
                 }
-                
             }
-            
         }
-        
     }
-
 }

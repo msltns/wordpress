@@ -154,7 +154,5 @@ if ( ! class_exists( '\msltns\wordpress\MS_CF7_Helper' ) ) {
             
             return apply_filters( 'msltns_corrected_selectable_cf7_form_tag', $tag );
         }
-        
     }
-
 }

@@ -6,56 +6,73 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 use msltns\wordpress\MS_Utils;
 
-/** 
- *  This class handles the complete license management of any wp plugin. It integrates with
- *  Software License Manager (@see https://wordpress.org/plugins/software-license-manager/).
- *  
- *  First of all you should integrate the license input form into your settings area. You
- *  can easily do this by calling 
- *  
- *  <code>
- *  do_action( '<your-plugin-prefix>_license_form' );
- *  </code> 
- *  
- *  within your settings.php file.
- *  
- *  To initialize the license manager add the following code:  
- *  
- *  <code>
- *  use msltns\wordpress\MS_License_Manager;
- *  
- *  $lm = new MS_License_Manager();
- *  $lm->init(
- *  	'<YOUR_PREFIX>',
- *  	'<YOUR-SLUG>',
- *  	'<License Server API URL>',
- *  	'<Secret Key for License Verification Requests>'
- *  );
- *  </code>
- *  
- *  giving a plugin prefix, the plugin reference. 
- *  
- *  You can then check whether a license key is active using 
- *  
- *  <code>
- *  $license_active = apply_filters( '<your-plugin-prefix>_license_active', false );
- *  </code>
- *  
- *  There are two action hooks that inform you about license key activation and deactivation: 
- *  
- *  <code>
- *  do_action( '<your-plugin-prefix>_license_activated' );
- *  do_action( '<your-plugin-prefix>_license_deactivated' );
- *  </code>
- *  
- *  You only need to add these action listeners to your plugin class in order to get up-to-date.
- *  
- *  <code>
- *  add_action( '<your-plugin-prefix>_license_activated',	array( $this, 'on_license_activated' ) );
- *  add_action( '<your-plugin-prefix>_license_deactivated', array( $this, 'on_license_deactivated' ) );
- *  </code>
+/**
+ * Class MS_License_Manager lets you manage your plugin and theme licenses.
  *
- * @since 0.0.1
+ * This class handles the complete license management of any wp plugin. It integrates with
+ * Software License Manager (@see https://wordpress.org/plugins/software-license-manager/).
+ * 
+ * First of all you should integrate the license input form into your settings area. You
+ * can easily do this by calling 
+ * 
+ * <code>
+ * do_action( '<your-plugin-prefix>_license_form' );
+ * </code> 
+ * 
+ * within your settings.php file.
+ * 
+ * To initialize the license manager add the following code:  
+ * 
+ * <code>
+ * use msltns\wordpress\MS_License_Manager;
+ * 
+ * $lm = new MS_License_Manager();
+ * $lm->init(
+ * 	'<YOUR_PREFIX>',
+ * 	'<YOUR-SLUG>',
+ * 	'<License Server API URL>',
+ * 	'<Secret Key for License Verification Requests>'
+ * );
+ * </code>
+ * 
+ * giving a plugin prefix, the plugin reference. 
+ * 
+ * You can then check whether a license key is active using 
+ * 
+ * <code>
+ * $license_active = apply_filters( '<your-plugin-prefix>_license_active', false );
+ * </code>
+ * 
+ * There are two action hooks that inform you about license key activation and deactivation: 
+ * 
+ * <code>
+ * do_action( '<your-plugin-prefix>_license_activated' );
+ * do_action( '<your-plugin-prefix>_license_deactivated' );
+ * </code>
+ * 
+ * You only need to add these action listeners to your plugin class in order to get up-to-date.
+ * 
+ * <code>
+ * add_action( '<your-plugin-prefix>_license_activated', array( $this, 'on_license_activated' ) );
+ * add_action( '<your-plugin-prefix>_license_deactivated', array( $this, 'on_license_deactivated' ) );
+ * </code>
+ *
+ * @category 	Class
+ * @package  	MS_License_Manager
+ * @author 		msltns <info@msltns.com>
+ * @version  	0.0.1
+ * @since       0.0.1
+ * @license 	GPL 3
+ *          	This program is free software; you can redistribute it and/or modify
+ *          	it under the terms of the GNU General Public License, version 3, as
+ *          	published by the Free Software Foundation.
+ *          	This program is distributed in the hope that it will be useful,
+ *          	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *          	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *          	GNU General Public License for more details.
+ *          	You should have received a copy of the GNU General Public License
+ *          	along with this program; if not, write to the Free Software
+ *          	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 if ( ! class_exists( '\msltns\wordpress\MS_License_Manager' ) ) {
 	
@@ -443,7 +460,5 @@ if ( ! class_exists( '\msltns\wordpress\MS_License_Manager' ) ) {
     	private function log( $message, $level = 'info' ) {
             $this->utils->log( $message, $level );
     	}
-        
 	}
-	
 }
