@@ -4,6 +4,8 @@ namespace msltns\wordpress;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
+use msltns\wordpress\MS_Utils;
+
 /**
  * Class MS_Update_Manager lets you manage your plugin and theme updates.
  *
@@ -683,5 +685,17 @@ if ( ! class_exists( '\msltns\wordpress\MS_Update_Manager' ) ) {
     	private function get_cache_key() {
     		return "msltns_{$this->prefix}_{$this->slug}";
     	}
+
+    	/**
+		 * Output a debug message.
+		 *
+		 * @param mixed 	$message 	Debug message.
+		 * @param string 	$level   	Debug level.
+		 * @param array     $context   	Debug context parameters.
+		 * @return void
+		 */
+		private function log( $message, string $level = 'info', array $context = [] ) {
+            MS_Utils::instance()->log( $message, $level, $context );
+		}
     }
 }

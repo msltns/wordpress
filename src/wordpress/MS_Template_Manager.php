@@ -5,6 +5,7 @@ namespace msltns\wordpress;
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 use msltns\wordpress\MS_Dynamic_Router;
+use msltns\wordpress\MS_Utils;
 
 /**
  * Class MS_Template_Manager makes using custom post templates in wordpress easy.
@@ -51,11 +52,9 @@ if ( ! class_exists( '\msltns\wordpress\MS_Template_Manager' ) ) {
     	 * Main constructor.
     	 */
         public function __construct() {
-            
-            add_filter( 'page_attributes_dropdown_pages_args',      array( $this, 'register_custom_templates' ) );
-            add_filter( 'wp_insert_post_data',                      array( $this, 'register_custom_templates' ) );
-            add_filter( 'template_include',                         array( $this, 'get_custom_template' ) );
-            
+            add_filter( 'page_attributes_dropdown_pages_args', array( $this, 'register_custom_templates' ) );
+            add_filter( 'wp_insert_post_data', array( $this, 'register_custom_templates' ) );
+            add_filter( 'template_include', array( $this, 'get_custom_template' ) );
         }
         
         /**
@@ -195,5 +194,17 @@ if ( ! class_exists( '\msltns\wordpress\MS_Template_Manager' ) ) {
         public function set_post_types( array $post_types ) {
             $this->post_types = $post_types;
         }
+        
+    	/**
+		 * Output a debug message.
+		 *
+		 * @param mixed 	$message 	Debug message.
+		 * @param string 	$level   	Debug level.
+		 * @param array     $context   	Debug context parameters.
+		 * @return void
+		 */
+		private function log( $message, string $level = 'info', array $context = [] ) {
+            MS_Utils::instance()->log( $message, $level, $context );
+		}
     }
 }

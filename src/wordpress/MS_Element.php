@@ -122,5 +122,17 @@ if ( ! class_exists( '\msltns\wordpress\MS_Element' ) ) {
                 }
             }
         }
+
+    	/**
+		 * Output a debug message.
+		 *
+		 * @param mixed 	$message 	Debug message.
+		 * @param string 	$level   	Debug level.
+		 * @param array     $context   	Debug context parameters.
+		 * @return void
+		 */
+		protected function log( $message, string $level = 'info', array $context = [] ) {
+            $this->utils->log( $message, $level, $context );
+		}
     }
 }

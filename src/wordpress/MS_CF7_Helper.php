@@ -154,5 +154,17 @@ if ( ! class_exists( '\msltns\wordpress\MS_CF7_Helper' ) ) {
             
             return apply_filters( 'msltns_corrected_selectable_cf7_form_tag', $tag );
         }
+
+    	/**
+		 * Output a debug message.
+		 *
+		 * @param mixed 	$message 	Debug message.
+		 * @param string 	$level   	Debug level.
+		 * @param array     $context   	Debug context parameters.
+		 * @return void
+		 */
+		private function log( $message, string $level = 'info', array $context = [] ) {
+            MS_Utils::instance()->log( $message, $level );
+		}
     }
 }

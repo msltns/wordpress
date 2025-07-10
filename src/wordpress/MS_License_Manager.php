@@ -451,14 +451,15 @@ if ( ! class_exists( '\msltns\wordpress\MS_License_Manager' ) ) {
 		}
 		
     	/**
-    	 * Output a debug message.
-    	 *
-    	 * @param string 	$message 	Debug message.
-    	 * @param string 	$level   	Debug level.
-    	 * @return void
-    	 */
-    	private function log( $message, $level = 'info' ) {
-            $this->utils->log( $message, $level );
-    	}
+		 * Output a debug message.
+		 *
+		 * @param mixed 	$message 	Debug message.
+		 * @param string 	$level   	Debug level.
+		 * @param array     $context   	Debug context parameters.
+		 * @return void
+		 */
+		private function log( $message, string $level = 'info', array $context = [] ) {
+            $this->utils->log( $message, $level, $context );
+		}
 	}
 }
