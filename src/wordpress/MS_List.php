@@ -48,7 +48,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
                     'action' => 'register',
                     'type'   => 'script',
                     'handle' => 'autocolumn',
-                    'src'    => trailingslashit( network_home_url() ) . 'msltnsjs/autocolumn',
+                    'src'    => trailingslashit( home_url() ) . 'msltnsjs/autocolumn',
                     'deps'   => [ 'jquery' ],
                     'footer' => true,
                 ],

@@ -74,7 +74,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_Fontawesome' ) ) {
                     'action' => 'register',
                     'type'   => 'style',
                     'handle' => 'fontawesome',
-                    'src'    => trailingslashit( network_home_url() ) . 'msltnscss/fontawesome',
+                    'src'    => trailingslashit( home_url() ) . 'msltnscss/fontawesome',
                 ],
             ];
             
