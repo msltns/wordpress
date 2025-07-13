@@ -125,6 +125,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_Slider' ) ) {
         		'class'      => '',
         		'slides'     => 3,
                 'image_size' => 'thumbnail',
+                'autoplay'   => false,
         	);
         	extract( shortcode_atts( $defaults, $atts ) );
             
@@ -166,6 +167,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_Slider' ) ) {
 			$class_name  = ! empty( $args['class'] ) ? $args['class'] : 'msltns-slider';
 			$slide_count = ! empty( $args['slides'] ) ? absint( $args['slides'] ) : 3;
 			$image_size  = ! empty( $args['image_size'] ) ? trim( $args['image_size'] ) : 'thumbnail';
+			$autoplay    = ! empty( $args['autoplay'] ) ? trim( $args['autoplay'] ) : false;
 
 			$output = '<div class="' . esc_attr( $class_name ) . '">';
 
@@ -181,7 +183,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_Slider' ) ) {
 		    }
 			$output .= '</div><br/>';
 
-			$autoplay = ( $count > ( $slide_count + 1 ) ) ? 'true' : 'false';
+			$autoplay = $autoplay ? 'true' : 'false';
 
 		    $output .= "<script>
 		                jQuery(document).ready(function() {
