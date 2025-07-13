@@ -34,6 +34,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_Fontawesome' ) ) {
     	 * Main constructor.
     	 */
         public function __construct() {
+            parent::__construct();
             
             $this->routes = [
                 'msltnscss/fontawesome' => [

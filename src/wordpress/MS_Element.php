@@ -53,7 +53,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_Element' ) ) {
             
             add_action( 'init', array( $this, 'register_dynamic_route' ), 5 );
             add_action( 'msltns_dynamic_route_file', array( $this, 'handle_dynamic_route_file' ), 10, 2 );
-            add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+            add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 5 );
         }
         
     	/**
@@ -112,7 +112,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_Element' ) ) {
                     $deps    = ! empty( $data['deps'] ) ? $data['deps'] : [];
                     $version = ! empty( $data['vers'] ) ? $data['vers'] : MSLTNS_ASSETS_VERSION;
                     $footer  = isset( $data['footer'] ) ? boolval( $data['footer'] ) : true;
-                    if ( ! empty( $src ) ) {
+                    if ( ! empty( $source ) ) {
                         $args = [ $handle, $source, $deps, $version ];
                         if ( 'script' === $type ) {
                             $args[] = $footer;

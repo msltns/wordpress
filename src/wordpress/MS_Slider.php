@@ -34,6 +34,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_Slider' ) ) {
     	 * Main constructor.
     	 */
         public function __construct() {
+            parent::__construct();
             
             $this->routes = [
                 'msltnscss/slick' => [
@@ -162,9 +163,9 @@ if ( ! class_exists( '\msltns\wordpress\MS_Slider' ) ) {
             wp_enqueue_style( 'slick-theme' );
             wp_enqueue_script( 'slick' );
 
-			$class_name  = isset( $args['class'] ) ? $args['class'] : 'msltns-slider';
-			$slide_count = isset( $args['slides'] ) ? absint( $args['slides'] ) : 3;
-			$image_size  = isset( $args['image_size'] ) ? absint( $args['image_size'] ) : 'thumbnail';
+			$class_name  = ! empty( $args['class'] ) ? $args['class'] : 'msltns-slider';
+			$slide_count = ! empty( $args['slides'] ) ? absint( $args['slides'] ) : 3;
+			$image_size  = ! empty( $args['image_size'] ) ? trim( $args['image_size'] ) : 'thumbnail';
 
 			$output = '<div class="' . esc_attr( $class_name ) . '">';
 
