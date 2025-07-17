@@ -4,7 +4,7 @@ namespace msltns\wordpress;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-use msltns\utilities\Logstream;
+use msltns\logging\Logstream;
 
 /**
  * Class MS_Logstream provides a way to log debug messages to an API.
@@ -368,8 +368,8 @@ if ( ! class_exists( '\msltns\wordpress\MS_Logstream' ) ) {
         
         private function get_logstream_handlers() {
             $handlers = [
-                '\msltns\utilities\Logstream_Handler'     => 'Default Debug Logstream',
-                '\msltns\utilities\Grafana_Loki_Handler'  => 'Grafana Loki Handler',
+                '\msltns\logging\Logstream_Handler'     => 'Default Debug Logstream',
+                '\msltns\logging\Grafana_Loki_Handler'  => 'Grafana Loki Handler',
             ];
             
             return apply_filters( 'msltns_logstream_handlers', $handlers );
