@@ -879,7 +879,8 @@ if ( ! class_exists( '\msltns\wordpress\MS_Utils' ) ) {
 		
         		// Register taxonomy
         		$cat_singular = $this->translate( 'Category' );
-        		$cat_plural   = $this->translate( 'Categories' );	
+        		$cat_plural   = $this->translate( 'Categories' );
+                $textdomain   = apply_filters( 'msltns_textdomain', 'msltns' );
 
         		register_taxonomy( "{$slug}_category",
         			[ $slug ],
@@ -903,7 +904,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_Utils' ) ) {
         				'show_tagcloud'     => false,
         				'public'            => true,
         				'rewrite'           => [
-        					'slug'          => _x( "{$slug}-category", 'The category slug - resave permalinks after changing this', 'impacvip' ),
+        					'slug'          => _x( "{$slug}-category", 'The category slug - resave permalinks after changing this', $textdomain ),
         					'with_front'    => false,
         					'hierarchical'  => false
         				],

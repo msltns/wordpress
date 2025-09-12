@@ -34,6 +34,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
     	 * Main constructor.
     	 */
         public function __construct() {
+            parent::__construct();
             
             $this->routes = [
                 'msltnsjs/autocolumn' => [
