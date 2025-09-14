@@ -37,19 +37,19 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
             parent::__construct();
             
             $this->routes = [
-                'msltnsjs/autocolumn' => [
-                    'file'  => MSLTNS_ASSETS_DIR . '/js/autocolumn.min.js',
+                'msltnsjs/columnizer' => [
+                    'file'  => MSLTNS_ASSETS_DIR . '/js/columnizer.min.js',
                     'type'  => 'js',
                     'ctype' => 'application/javascript',
                 ],
             ];
             
             $this->scripts = [
-                'autocolumnjs' => [
+                'columnizerjs' => [
                     'action' => 'register',
                     'type'   => 'script',
-                    'handle' => 'autocolumn',
-                    'src'    => trailingslashit( home_url() ) . 'msltnsjs/autocolumn',
+                    'handle' => 'columnizer',
+                    'src'    => trailingslashit( home_url() ) . 'msltnsjs/columnizer',
                     'deps'   => [ 'jquery' ],
                     'footer' => true,
                 ],
@@ -81,7 +81,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
         	);
         	extract( shortcode_atts( $defaults, $atts ) );
             
-            wp_enqueue_script( 'autocolumn' );
+            wp_enqueue_script( 'columnizer' );
     
     		$args = array(
                 'post_type'        => $post_type,
@@ -112,7 +112,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
     		}
 	
         	$list .= '</div>';
-        	$list .= '<script>jQuery(function(){var u="' . $cols . '";jQuery(window).width()<992&&(u=2),jQuery(".columnized").columnize({columns:u})});</script>';
+        	$list .= '<script>jQuery(function(){const n="' . $cols . '";jQuery(window).width()<992&&(n=2),jQuery(".columnized").columnize({columns:n,doneFunc:function(){$(".columnized > .column").css({width:100/n+"%"}),$(window).trigger("' . $post_type . 'ListColumnized"),$(window).trigger("columnizerFinished")}})});</script>';
             
         	return $list;
         }
@@ -139,7 +139,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
         	);
         	extract( shortcode_atts( $defaults, $atts ) );
 	
-            wp_enqueue_script( 'autocolumn' );
+            wp_enqueue_script( 'columnizer' );
     
         	$hierarchical = ( $hierarchical === 'true' ) ? true : false;
         	$hide_empty   = ( $hide_empty === 'true' ) ? true : false;
@@ -181,7 +181,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
         	}
 	
         	$list .= '</div>';
-        	$list .= '<script>jQuery(function(){var u="' . $cols . '";jQuery(window).width()<992&&(u=2),jQuery(".columnized").columnize({columns:u})});</script>';
+        	$list .= '<script>jQuery(function(){const n="' . $cols . '";jQuery(window).width()<992&&(n=2),jQuery(".columnized").columnize({columns:n,doneFunc:function(){$(".columnized > .column").css({width:100/n+"%"}),$(window).trigger("termListColumnized"),$(window).trigger("columnizerFinished")}})});</script>';
             
         	return $list;
         }
