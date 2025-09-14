@@ -168,8 +168,11 @@ if ( ! class_exists( '\msltns\wordpress\MS_Slider' ) ) {
 			$slide_count = ! empty( $args['slides'] ) ? absint( $args['slides'] ) : 3;
 			$image_size  = ! empty( $args['image_size'] ) ? trim( $args['image_size'] ) : 'thumbnail';
 			$autoplay    = ! empty( $args['autoplay'] ) ? trim( $args['autoplay'] ) : false;
-
-			$output = '<div class="' . esc_attr( $class_name ) . '">';
+            if ( is_string( $autoplay ) ) {
+                $autoplay = in_array( $autoplay, [ '1', 'true' ] ) ? true : false;
+            }
+            
+            $output = '<div class="' . esc_attr( $class_name ) . '">';
 
 		    $count = 0;
 		    foreach ( $posts as $post ) {
