@@ -157,14 +157,14 @@ if ( ! class_exists( '\msltns\wordpress\MS_Slider' ) ) {
 		private function create_post_slider( $posts = array(), $args = array() ) {
             
             if ( empty( $posts ) ) {
-                return false;
+                return '';
             }
             
             wp_enqueue_style( 'slick' );
             wp_enqueue_style( 'slick-theme' );
             wp_enqueue_script( 'slick' );
 
-			$class_name  = ! empty( $args['class'] ) ? $args['class'] : 'msltns-slider';
+			$class_name  = ! empty( $args['class'] ) ? $args['class'] : 'ms-slider';
 			$slide_count = ! empty( $args['slides'] ) ? absint( $args['slides'] ) : 3;
 			$image_size  = ! empty( $args['image_size'] ) ? trim( $args['image_size'] ) : 'thumbnail';
 			$autoplay    = ! empty( $args['autoplay'] ) ? trim( $args['autoplay'] ) : false;

@@ -77,7 +77,8 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
         		'category'  => 0,
                 // 'orderby'   => 'title'
                 // 'order'     => 'ASC',
-        		'cols'      => '3'
+        		'cols'      => 3,
+                'class'     => '',
         	);
         	extract( shortcode_atts( $defaults, $atts ) );
             
@@ -98,8 +99,14 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
     		);
     		$posts = get_posts( $args );
             
-            $list = '<div class="columnized">';
-	
+            if ( empty( $posts ) ) {
+                return '';
+            }
+            
+            $class_name = ! empty( $class ) ? $class : 'ms-post-list';
+            
+            $list = '<div class="' . esc_attr( $class_name ) . ' columnized">';
+	        
     		// alphabetical presentation
     		$sorted_posts = $this->utils->sort_posts_alphabetically( $posts );
     		foreach ( $sorted_posts as $letter => $post_list ) {
@@ -135,7 +142,8 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
         		'orderby' 		=> 'name',
         		'order' 		=> 'ASC',
         		'hide_empty' 	=> 'false',
-        		'cols'			=> '3'
+        		'cols'			=> 3,
+                'class'         => '',
         	);
         	extract( shortcode_atts( $defaults, $atts ) );
 	
@@ -146,7 +154,13 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
 	
         	$terms = $this->utils->get_term_list( $post_type, $taxonomy, $limit, $hierarchical, $orderby, $order, $hide_empty );
             
-            $list = '<div class="columnized">';
+            if ( empty( $terms ) ) {
+                return '';
+            }
+            
+            $class_name = ! empty( $class ) ? $class : 'ms-term-list';
+            
+            $list = '<div class="' . esc_attr( $class_name ) . ' columnized">';
 	
         	if ( $hierarchical ) {
 		
@@ -165,7 +179,6 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
         				}
         			}
         		}
-		
         	} else {
 		
         		// alphabetical presentation
@@ -179,7 +192,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
         			}
         		}
         	}
-	
+
         	$list .= '</div>';
         	$list .= '<script>jQuery(function(){const n="' . $cols . '";jQuery(window).width()<992&&(n=2),jQuery(".columnized").columnize({columns:n,doneFunc:function(){$(".columnized > .column").css({width:100/n+"%"}),$(window).trigger("termListColumnized"),$(window).trigger("columnizerFinished")}})});</script>';
             
