@@ -419,7 +419,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_Utils' ) ) {
     			echo '<input type="' . $args['type'] . '" id="' . $args['name'] . '" name="' . $args['container'] . '[' . $args['name'] . ']" ';
     			echo 'value="1" ';
                 if ( $this->get_value( $option, $args ) === "1" ) {
-    				echo 'checked="checked />"';
+    				echo 'checked="checked" />';
     			} else {
     				echo "/>";
     			}
