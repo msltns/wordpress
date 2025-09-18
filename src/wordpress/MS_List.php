@@ -77,10 +77,54 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
         		'category'  => 0,
                 // 'orderby'   => 'title'
                 // 'order'     => 'ASC',
-        		'cols'      => 3,
+        		'cols'      => 5,
+        		'cols_xxs'  => 0, // < 400px
+        		'cols_xs'   => 0, // ≥ 400px
+        		'cols_sm'   => 0, // ≥ 576px
+        		'cols_md'   => 0, // ≥ 768px
+        		'cols_lg'   => 0, // ≥ 992px
+        		'cols_xl'   => 0, // ≥ 1200px
+        		'cols_xxl'  => 0, // ≥ 1400px
                 'class'     => '',
         	);
         	extract( shortcode_atts( $defaults, $atts ) );
+            
+    		$cols     = intval( $cols );
+            $cols_xxs = intval( $cols_xxs );
+            $cols_xs  = intval( $cols_xs );
+            $cols_sm  = intval( $cols_sm );
+            $cols_md  = intval( $cols_md );
+            $cols_lg  = intval( $cols_lg );
+            $cols_xl  = intval( $cols_xl );
+            $cols_xxl = intval( $cols_xxl );
+
+            if ( $cols_xxl === 0 && $cols > 0 ) {
+                $cols_xxl = $cols;
+            }
+            
+            if ( $cols_xl === 0 && $cols_xxl > 0 ) {
+                $cols_xl = ( $cols_xxl > 1 ) ? $cols_xxl - 1 : $cols_xxl;
+            }
+            
+            if ( $cols_lg === 0 && $cols_xl > 0 ) {
+                $cols_lg = ( $cols_xl > 1 ) ? $cols_xl - 1 : $cols_xl;
+            }
+            
+            if ( $cols_md === 0 && $cols_lg > 0 ) {
+                $cols_md = ( $cols_lg > 1 ) ? $cols_lg - 1 : $cols_lg;
+            }
+            
+            if ( $cols_sm === 0 && $cols_md > 0 ) {
+                $cols_sm = ( $cols_md > 1 ) ? $cols_md - 1 : $cols_md;
+            }
+            
+            if ( $cols_xs === 0 && $cols_sm > 0 ) {
+                $cols_xs = ( $cols_sm > 1 ) ? $cols_sm - 1 : $cols_sm;
+            }
+            
+            if ( $cols_xxs === 0 && $cols_xs > 0 ) {
+                $cols_xxs = ( $cols_xs > 1 ) ? $cols_xs - 1 : 1;
+            }
             
             wp_enqueue_script( 'columnizer' );
     
@@ -119,7 +163,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
     		}
 	
         	$list .= '</div>';
-        	$list .= '<script>jQuery(function(){const n="' . $cols . '";jQuery(window).width()<992&&(n=2),jQuery(".columnized").columnize({columns:n,doneFunc:function(){$(".columnized > .column").css({width:100/n+"%"}),$(window).trigger("' . $post_type . 'ListColumnized"),$(window).trigger("columnizerFinished")}})});</script>';
+        	$list .= '<script>jQuery(function(){var o=jQuery(window).width(),c=' . $cols_xxl . ';o<400?c=' . $cols_xxs . ':o<576?c=' . $cols_xs . ':o<768?c=' . $cols_sm . ':o<992?c=' . $cols_md . ':o<1200?c=' . $cols_lg . ':o<1400&&(c=' . $cols_xl . '),jQuery(".columnized").columnize({columns:c,doneFunc:function(){$(".columnized > .column").css({width:100/c+"%"}),$(window).trigger("' . $post_type . 'ListColumnized"),$(window).trigger("columnizerFinished")}})});</script>';
             
         	return $list;
         }
@@ -142,10 +186,54 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
         		'orderby' 		=> 'name',
         		'order' 		=> 'ASC',
         		'hide_empty' 	=> 'false',
-        		'cols'			=> 3,
+        		'cols'          => 5,
+        		'cols_xxs'      => 0, // < 400px
+        		'cols_xs'       => 0, // ≥ 400px
+        		'cols_sm'       => 0, // ≥ 576px
+        		'cols_md'       => 0, // ≥ 768px
+        		'cols_lg'       => 0, // ≥ 992px
+        		'cols_xl'       => 0, // ≥ 1200px
+        		'cols_xxl'      => 0, // ≥ 1400px
                 'class'         => '',
         	);
         	extract( shortcode_atts( $defaults, $atts ) );
+            
+    		$cols     = intval( $cols );
+            $cols_xxs = intval( $cols_xxs );
+            $cols_xs  = intval( $cols_xs );
+            $cols_sm  = intval( $cols_sm );
+            $cols_md  = intval( $cols_md );
+            $cols_lg  = intval( $cols_lg );
+            $cols_xl  = intval( $cols_xl );
+            $cols_xxl = intval( $cols_xxl );
+
+            if ( $cols_xxl === 0 && $cols > 0 ) {
+                $cols_xxl = $cols;
+            }
+            
+            if ( $cols_xl === 0 && $cols_xxl > 0 ) {
+                $cols_xl = ( $cols_xxl > 1 ) ? $cols_xxl - 1 : $cols_xxl;
+            }
+            
+            if ( $cols_lg === 0 && $cols_xl > 0 ) {
+                $cols_lg = ( $cols_xl > 1 ) ? $cols_xl - 1 : $cols_xl;
+            }
+            
+            if ( $cols_md === 0 && $cols_lg > 0 ) {
+                $cols_md = ( $cols_lg > 1 ) ? $cols_lg - 1 : $cols_lg;
+            }
+            
+            if ( $cols_sm === 0 && $cols_md > 0 ) {
+                $cols_sm = ( $cols_md > 1 ) ? $cols_md - 1 : $cols_md;
+            }
+            
+            if ( $cols_xs === 0 && $cols_sm > 0 ) {
+                $cols_xs = ( $cols_sm > 1 ) ? $cols_sm - 1 : $cols_sm;
+            }
+            
+            if ( $cols_xxs === 0 && $cols_xs > 0 ) {
+                $cols_xxs = ( $cols_xs > 1 ) ? $cols_xs - 1 : 1;
+            }
 	
             wp_enqueue_script( 'columnizer' );
     
@@ -194,7 +282,7 @@ if ( ! class_exists( '\msltns\wordpress\MS_List' ) ) {
         	}
 
         	$list .= '</div>';
-        	$list .= '<script>jQuery(function(){const n="' . $cols . '";jQuery(window).width()<992&&(n=2),jQuery(".columnized").columnize({columns:n,doneFunc:function(){$(".columnized > .column").css({width:100/n+"%"}),$(window).trigger("termListColumnized"),$(window).trigger("columnizerFinished")}})});</script>';
+        	$list .= '<script>jQuery(function(){var o=jQuery(window).width(),c=' . $cols_xxl . ';o<400?c=' . $cols_xxs . ':o<576?c=' . $cols_xs . ':o<768?c=' . $cols_sm . ':o<992?c=' . $cols_md . ':o<1200?c=' . $cols_lg . ':o<1400&&(c=' . $cols_xl . '),jQuery(".columnized").columnize({columns:c,doneFunc:function(){$(".columnized > .column").css({width:100/c+"%"}),$(window).trigger("termListColumnized"),$(window).trigger("columnizerFinished")}})});</script>';
             
         	return $list;
         }
